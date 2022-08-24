@@ -1,0 +1,32 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} The Best News: {{ post }} {% endblock title %}
+
+{% block content %}
+
+<br>
+<h3>{{ post }}</h3>
+<br>
+{{ post.text }}
+<br>
+<br>
+-= новость №{{ post.pk }}; автор: {{ post.author }}; категория: {{ post.category }}(id:{{ post.category.id }}); дата создания: {{ post.dateCreation }} =-
+<br>
+
+<hr>
+{% if is_not_subscribe %}
+<!--GET запрос, который передает в наше представление значение категории, переменная post.category.id, -->
+<!--которая в дальнейшем необходима для добавления подписчиков-->
+<button><a href="new_subscribe/?pk={{ post.category.id }}">Подписаться</a></button>
+{% endif %}
+
+{% if is_subscribe %}
+<button><a href="non_subscribe/?pk={{ post.category.id }}">Отписаться</a></button>
+{% endif %}
+
+<hr>
+<button><a href="{% url 'news_edit' post.id %}"><u>Редактировать</u></a></button>   <!--ссылка на редактирование товара-->
+<button><a href="{% url 'news_delete' post.id %}"><u>Удалить</u></a></button>   <!--ссылка на удаление товара-->
+<hr>
+
+{% endblock content %}
